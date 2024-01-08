@@ -1,11 +1,15 @@
 const { Telegraf } = require('telegraf');
 const config = require('./config.json');
+const dailyModule = require('./modules/daily');
+const monthlyModule = require('./modules/monthly');
+const yearlyModule = require('./modules/yearly');
+const listModule = require('./modules/list');
 
 const bot = new Telegraf(config.telegramToken);
 
 // Start command
 bot.command('start', (ctx) => {
-    const telegraphPictureUrl = 'https://example.com/telegraph_picture.jpg'; // Replace with your Telegraph picture URL
+    const telegraphPictureUrl = 'https://graph.org//file/c8bded707a90e923fe757.jpg'; // Replace with your Telegraph picture URL
     const caption = 'Welcome to the Todo Bot! Manage your daily, monthly, and yearly tasks.';
     
     // Send Telegraph picture with caption and buttons
@@ -29,10 +33,24 @@ function getStartButtons() {
     };
 }
 
-// Handle button callbacks
-bot.action('daily', (ctx) => ctx.answerCbQuery('Daily tasks selected'));
-bot.action('monthly', (ctx) => ctx.answerCbQuery('Monthly tasks selected'));
-bot.action('yearly', (ctx) => ctx.answerCbQuery('Yearly tasks selected'));
+// Example usage of the modules
+bot.command('daily', (ctx) => dailyModule.handleDailyCommand(ctx));
+bot.command('monthly', (ctx) => monthlyModule.handleMonthlyCommand(ctx));
+bot.command('yearly', (ctx) => yearlyModule.handleYearlyCommand(ctx));
+bot.command('list', (ctx) => listModule.handleListCommand(ctx));
+
+// Handle inline button callbacks
+bot.action(/removeTasks_(\d+)/, (ctx) => {
+    const userId = parseInt(ctx.match[1]);
+    // Implement logic to remove completed tasks for the specified user
+    ctx.answerCbQuery(`Removed completed tasks for user ${userId}`);
+});
+
+bot.action(/addTask_(\d+)/, (ctx) => {
+    const userId = parseInt(ctx.match[1]);
+    // Implement logic to add a task for the specified user
+    ctx.answerCbQuery(`Added a task for user ${userId}`);
+});
 
 // Start the bot
 bot.launch();
