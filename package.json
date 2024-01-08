@@ -11,6 +11,5 @@
   "license": "MIT",
   "dependencies": {
     "telegraf": "^4.7.13"
-    // Add other dependencies as needed
   }
 }
