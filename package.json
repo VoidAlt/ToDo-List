@@ -1,0 +1,16 @@
+{
+  "name": "todo-bot",
+  "version": "1.0.0",
+  "description": "Telegram bot to manage daily, monthly, and yearly tasks",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"No tests specified\""
+  },
+  "author": "VoidAryan",
+  "license": "MIT",
+  "dependencies": {
+    "telegraf": "^4.7.13"
+    // Add other dependencies as needed
+  }
+}
