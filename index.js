@@ -5,7 +5,14 @@ const monthlyModule = require('./modules/monthly');
 const yearlyModule = require('./modules/yearly');
 const listModule = require('./modules/list');
 
+process.on('unhandledRejection', (err) => {
+    console.error('Unhandled Rejection:', err);
+});
+
 const bot = new Telegraf(config.telegramToken);
+
+const port = process.env.PORT || 3000;
+bot.startWebhook('/path-to-webhook', null, port);
 
 // Start command
 bot.command('start', (ctx) => {
