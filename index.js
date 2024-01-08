@@ -1,16 +1,15 @@
 const { Telegraf } = require('telegraf');
-const fs = require('fs');
 const config = require('./config.json');
 
 const bot = new Telegraf(config.telegramToken);
 
 // Start command
 bot.command('start', (ctx) => {
-    const telegraphPicture = fs.readFileSync('./images/telegraph_picture.jpg');
+    const telegraphPictureUrl = 'https://example.com/telegraph_picture.jpg'; // Replace with your Telegraph picture URL
     const caption = 'Welcome to the Todo Bot! Manage your daily, monthly, and yearly tasks.';
     
     // Send Telegraph picture with caption and buttons
-    ctx.replyWithPhoto({ source: telegraphPicture }, { caption, reply_markup: getStartButtons() });
+    ctx.replyWithPhoto({ url: telegraphPictureUrl }, { caption, reply_markup: getStartButtons() });
 });
 
 // Help command
