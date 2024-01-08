@@ -19,7 +19,7 @@ bot.startWebhook('/path-to-webhook', null, port);
 
 // Start command
 bot.command('start', (ctx) => {
-    const telegraphPictureUrl = 'https://example.com/telegraph_picture.jpg'; // Replace with your Telegraph picture URL
+    const telegraphPictureUrl = 'https://graph.org//file/c5503a0722c16e35ea672.jpg'; // Replace with your Telegraph picture URL
     const caption = 'Welcome to the Todo Bot! Manage your daily, monthly, and yearly tasks.';
     
     // Inline buttons for /start command
