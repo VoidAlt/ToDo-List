@@ -15,30 +15,49 @@ const port = process.env.PORT || 3000;
 bot.startWebhook('/path-to-webhook', null, port);
 
 // Start command
+// ... (your existing code)
+
+// Start command
 bot.command('start', (ctx) => {
-    const telegraphPictureUrl = 'https://graph.org//file/c8bded707a90e923fe757.jpg'; // Replace with your Telegraph picture URL
+    const telegraphPictureUrl = 'https://example.com/telegraph_picture.jpg'; // Replace with your Telegraph picture URL
     const caption = 'Welcome to the Todo Bot! Manage your daily, monthly, and yearly tasks.';
     
+    // Inline buttons for /start command
+    const inlineButtons = [
+        { text: 'Help', callback_data: 'help' },
+        { text: 'About', callback_data: 'about' }
+    ];
+
     // Send Telegraph picture with caption and buttons
-    ctx.replyWithPhoto({ url: telegraphPictureUrl }, { caption, reply_markup: getStartButtons() });
+    ctx.replyWithPhoto({ url: telegraphPictureUrl }, { caption, reply_markup: { inline_keyboard: [inlineButtons] } });
 });
 
-// Help command
-bot.command('help', (ctx) => {
-    const helpMessage = 'This Todo Bot helps you manage your tasks.\n\nCommands:\n/start - Start the bot\n/help - Show this help message\n/list - Manage your to-do lists';
-    ctx.reply(helpMessage);
+// Handle inline button callbacks
+bot.action('help', (ctx) => {
+    const helpMessage = 'This is the help message. Click the button below to add tasks.';
+    const addTasksButton = [{ text: 'Add Tasks', callback_data: 'addTasks' }];
+
+    ctx.reply(helpMessage, { reply_markup: { inline_keyboard: [addTasksButton] } });
 });
 
-// Inline buttons for /start command
-function getStartButtons() {
-    return {
-        inline_keyboard: [
-            [{ text: 'Daily Tasks', callback_data: 'daily' }],
-            [{ text: 'Monthly Tasks', callback_data: 'monthly' }],
-            [{ text: 'Yearly Tasks', callback_data: 'yearly' }]
-        ]
-    };
-}
+bot.action('about', (ctx) => {
+    const aboutMessage = 'This is the Todo Bot. It helps you manage your tasks. Click the buttons below for more information.';
+    const buttonWithUrl = [{ text: 'Visit Website', url: 'https://example.com' }];
+    const openMessageButton = [{ text: 'Open Another Message', callback_data: 'openAnotherMessage' }];
+
+    ctx.reply(aboutMessage, { reply_markup: { inline_keyboard: [buttonWithUrl, buttonWithUrl, openMessageButton] } });
+});
+
+bot.action('addTasks', (ctx) => {
+    const addTasksMessage = 'Choose a category to add tasks:';
+    const dailyButton = [{ text: 'Daily', callback_data: 'addDailyTask' }];
+    const monthlyButton = [{ text: 'Monthly', callback_data: 'addMonthlyTask' }];
+    const yearlyButton = [{ text: 'Yearly', callback_data: 'addYearlyTask' }];
+
+    ctx.reply(addTasksMessage, { reply_markup: { inline_keyboard: [dailyButton, monthlyButton, yearlyButton] } });
+});
+
+// ... (your existing code)
 
 // Example usage of the modules
 bot.command('daily', (ctx) => dailyModule.handleDailyCommand(ctx));
