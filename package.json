@@ -11,10 +11,9 @@
   "license": "MIT",
   "dependencies": {
     "telegraf": "^4.7.13"
+  },
+  "engines": {
+    "node": "14.x",
+    "npm": "6.x"
   }
-}
-
-"engines": {
-  "node": "14.x",
-  "npm": "6.x"
 }
